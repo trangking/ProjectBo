@@ -1,0 +1,149 @@
+.Evaluation {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+}
+.EvaluationFinnish {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+}
+.EvaluationFinnish .body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.Evaluation .body {
+  border: 0px;
+  margin-top: 2%;
+  height: auto;
+}
+.Evaluation .body .ant-table-wrapper .ant-table {
+  border-radius: 10px;
+}
+.HeaderEvaluation {
+  margin-top: 3%;
+  width: 30%;
+  height: 6%;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+}
+
+.question {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  background-color: #ffff;
+}
+
+.Evaluation .body .question p {
+  text-align: start;
+  font-size: 16px;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-left: 5px;
+  margin-right: 40%;
+}
+.Evaluation .ant-table-wrapper .ant-table-pagination-right {
+  display: none;
+}
+.Evaluation .ControlButton {
+  display: flex;
+  margin-top: 10px;
+  width: 30%;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.Evaluation .ControlButton .ant-btn-default {
+  color: #ffff;
+  background-color: rgb(173, 113, 0);
+  font-weight: bold;
+}
+.ControlButton .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  color: rgb(173, 113, 0);
+  background-color: #ffff;
+  border-color: rgb(173, 113, 0);
+}
+
+@media (max-width: 600px) {
+  .Evaluation .body {
+    width: 100%;
+    border: 0px;
+    height: auto;
+  }
+  .HeaderEvaluation {
+    margin-top: 6%;
+    width: 100%;
+    height: 8%;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+  }
+  .question {
+    display: flex;
+    flex-direction: row;
+  }
+  .Evaluation .body .question p {
+    text-align: start;
+    font-size: 10px;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin-left: 5px;
+    margin-right: 100px;
+  }
+  .ant-checkbox {
+    margin-left: 30px;
+  }
+  .ant-table-wrapper
+    .ant-table-container
+    table
+    > thead
+    > tr:first-child
+    > *:first-child {
+    width: 80%;
+    border-start-start-radius: 8px;
+  }
+  .EvaluationFinnish .body h1 {
+    font-size: 24px;
+  }
+  .Evaluation .ControlButton {
+    width: 100%;
+  }
+  .Evaluation .body .ControlTable .ant-table-wrapper .ant-table {
+    overflow-x: auto;
+    border: 1px solid #54946a;
+  }
+  .Evaluation
+    .body
+    .ControlTable
+    .ant-table-wrapper
+    .ant-table-tbody
+    > tr
+    > th:first-child,
+  .ant-table-wrapper .ant-table-tbody > tr > td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white;
+    z-index: 1;
+    min-width: 150px !important;
+    width: 150px !important;
+  }
+  .Evaluation
+    .body
+    .ControlTable
+    .ant-table-wrapper
+    .ant-table-container
+    table
+    > thead
+    > tr:first-child
+    > *:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white;
+    z-index: 1;
+  }
+}

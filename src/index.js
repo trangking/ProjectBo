@@ -1,14 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./Hearder/Hearder";
+import Consent_Conditions from "./ConsentConditions/ConsentConditions";
+import Menu from "./Menu/Menu";
+import Evaluation_Form from "./Evaluation_Form/Evaluation_Form";
+import EvaluationFinish from "./Evaluation_Form/EvaluationFinnish";
+import Evaluation2 from "./Evaluation_Form/Evaluation2";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route index element={<App />} />
+      <Route path="/Hearder" element={<Header />} />
+      <Route path="/Consent_Conditions" element={<Consent_Conditions />} />
+      <Route path="/Menu" element={<Menu />} />
+      <Route path="/Evaluation_Form" element={<Evaluation_Form />} />
+      <Route path="/Evaluation2" element={<Evaluation2 />} />
+      <Route path="/EvaluationFinish" element={<EvaluationFinish />} />
+    </Routes>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
