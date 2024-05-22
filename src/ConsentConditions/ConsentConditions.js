@@ -5,8 +5,10 @@ import Header from "../Hearder/Hearder";
 import "../App.css";
 import "../styles/login.css";
 import "../styles/ConsentConditions.css";
+
 const Consent_Conditions = () => {
   const navigate = useNavigate();
+
   const HandleReturnLogin = () => {
     navigate("/");
   };
@@ -15,8 +17,8 @@ const Consent_Conditions = () => {
   };
   return (
     <>
-      <Header />
       <div className="App">
+        <Header />
         <div className="App-background">
           <div className="ConsentConditions">
             <div className="body">

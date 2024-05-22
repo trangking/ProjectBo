@@ -10,6 +10,8 @@ import Menu from "./Menu/Menu";
 import Evaluation_Form from "./Evaluation_Form/Evaluation_Form";
 import EvaluationFinish from "./Evaluation_Form/EvaluationFinnish";
 import Evaluation2 from "./Evaluation_Form/Evaluation2";
+import StudentPage from "./StudentPage/StudentPage";
+import Record from "./Record/Record";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +24,8 @@ root.render(
       <Route path="/Evaluation_Form" element={<Evaluation_Form />} />
       <Route path="/Evaluation2" element={<Evaluation2 />} />
       <Route path="/EvaluationFinish" element={<EvaluationFinish />} />
+      <Route path="/StudentPage" element={<StudentPage />} />
+      <Route path="/Record" element={<Record />} />
     </Routes>
   </BrowserRouter>
 );

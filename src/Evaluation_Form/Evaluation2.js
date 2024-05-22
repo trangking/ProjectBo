@@ -177,6 +177,8 @@ const Evaluation2 = () => {
 
     sentfi.push({ point: point, message: messageEvaluation });
     localStorage.setItem("senttofinnish", JSON.stringify(sentfi));
+    localStorage.setItem("message", messageEvaluation);
+    localStorage.setItem("point", point);
     await setsenttofinnish(sentfi);
     navigate("/EvaluationFinish");
   };

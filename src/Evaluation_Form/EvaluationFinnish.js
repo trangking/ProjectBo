@@ -5,6 +5,8 @@ import "../styles/Evaluation.css";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 const EvaluationFinish = () => {
   const navigate = useNavigate();
@@ -12,16 +14,42 @@ const EvaluationFinish = () => {
   const [pointZero, setpointZero] = useState();
   const Handblegomenu = () => {
     navigate("/Menu");
-    localStorage.clear();
+    localStorage.removeItem("point");
+    localStorage.removeItem("message");
+    localStorage.removeItem("pointZero");
+    localStorage.removeItem("senttofinnish");
+    localStorage.removeItem("setpoint");
   };
   useEffect(() => {
     const senttofinnish = JSON.parse(localStorage.getItem("senttofinnish"));
-    const pointZero = JSON.parse(localStorage.getItem("pointZero"));
+
+    const message = localStorage.getItem("message"); // แก้ senttofinnish เป็น message
+    const point = localStorage.getItem("point"); // เพิ่มการดึงข้อมูล point จาก localStorage
+    const pointZero = localStorage.getItem("pointZero");
+    const studentId = localStorage.getItem("studentId");
     if (senttofinnish) {
       setdata(senttofinnish);
     }
     if (pointZero) {
       setpointZero(pointZero);
+    }
+    const sendDataToFirebase = async () => {
+      try {
+        const colRef = collection(db, "SavePoint");
+        await addDoc(colRef, {
+          studentId: studentId,
+          message: message,
+          pointZero: pointZero,
+          point: point,
+        });
+        console.log("Evaluation results added to Firebase successfully!");
+      } catch (error) {
+        console.error("Error adding evaluation results to Firebase: ", error);
+      }
+    };
+    if (message && pointZero) {
+      // แก้ senttofinnish เป็น message
+      sendDataToFirebase();
     }
   }, []);
 

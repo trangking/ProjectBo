@@ -1,11 +1,40 @@
 import "../styles/login.css";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
+import { fetchData } from "../firebase/firebase";
+import React, { useState, useEffect } from "react";
+import Header from "../Hearder/Hearder";
+
 const Login = () => {
+  const [studentId, setStudentId] = useState("");
+  const [fetchedData, setFetchedData] = useState(null);
+
   const navigate = useNavigate();
-  const Hearderlogin = () => {
-    navigate("/Consent_Conditions");
+
+  const handleLogin = () => {
+    if (fetchedData && studentId.trim() !== "") {
+      const foundStudent = fetchedData.find(
+        (data) => data.studentId === studentId
+      );
+
+      if (foundStudent) {
+        localStorage.setItem("studentId", studentId);
+
+        navigate("/Consent_Conditions");
+      } else {
+        alert("ไม่พบรหัสนักศึกษา");
+      }
+    } else {
+      console.log("Data not fetched or studentId is empty.");
+    }
   };
+
+  useEffect(() => {
+    fetchData().then((data) => {
+      setFetchedData(data);
+    });
+  }, []);
+
   return (
     <>
       <Form>
@@ -23,7 +52,7 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input onChange={(e) => setStudentId(e.target.value)} />
               </Form.Item>
             </div>
             <div className="password">
@@ -41,7 +70,7 @@ const Login = () => {
               </Form.Item>
             </div>
             <div className="loginsummit">
-              <Button onClick={Hearderlogin}>Login</Button>
+              <Button onClick={handleLogin}>Login</Button>
             </div>
           </div>
         </div>
@@ -49,4 +78,5 @@ const Login = () => {
     </>
   );
 };
+
 export default Login;

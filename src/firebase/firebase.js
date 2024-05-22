@@ -26,12 +26,47 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const db = getFirestore(app);
+const db = getFirestore(app); // เพิ่มนี้เข้าไป
 
 const fetchData = async () => {
   const colRef = collection(db, "data");
   const snapshot = await getDocs(colRef);
-  return snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return data;
+};
+const fetchDataByStudentId = async (studentId) => {
+  const colRef = collection(db, "data");
+  const snapshot = await getDocs(colRef);
+
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  // Filter data by studentId
+  const filteredData = data.filter((item) => item.studentId === studentId);
+
+  return filteredData;
 };
 
-export { fetchData };
+const fetchDataByPoint = async (studentId) => {
+  const colRef = collection(db, "SavePoint");
+  const snapshot = await getDocs(colRef);
+
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  // Filter data by studentId
+  const filteredData = data.filter((item) => item.studentId === studentId);
+
+  return filteredData;
+};
+
+export { fetchDataByPoint, fetchData, fetchDataByStudentId, addDoc, doc, db };
