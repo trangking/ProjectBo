@@ -69,7 +69,21 @@
   background-color: #ffff;
   border-color: rgb(173, 113, 0);
 }
+.green {
+  color: green !important;
+}
 
+.yellow {
+  color: rgb(250, 250, 158) !important;
+}
+
+.orange {
+  color: orange !important;
+}
+
+.red {
+  color: red !important;
+}
 @media (max-width: 600px) {
   .Evaluation .body {
     width: 100%;

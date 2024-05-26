@@ -19,8 +19,10 @@ const Login = () => {
 
       if (foundStudent) {
         localStorage.setItem("studentId", studentId);
-
         navigate("/Consent_Conditions");
+      } else if (studentId === "comsci") {
+        localStorage.setItem("studentId", studentId);
+        navigate("/adminpage ");
       } else {
         alert("ไม่พบรหัสนักศึกษา");
       }

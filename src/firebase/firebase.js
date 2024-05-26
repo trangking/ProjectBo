@@ -68,5 +68,26 @@ const fetchDataByPoint = async (studentId) => {
 
   return filteredData;
 };
+const fetchData_record = async () => {
+  const db = getFirestore();
+  const colRef = collection(db, "SavePoint");
+  const snapshot = await getDocs(colRef);
 
-export { fetchDataByPoint, fetchData, fetchDataByStudentId, addDoc, doc, db };
+  // Map through the documents and structure the data
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return data;
+};
+
+export {
+  fetchDataByPoint,
+  fetchData,
+  fetchDataByStudentId,
+  fetchData_record,
+  addDoc,
+  doc,
+  db,
+};

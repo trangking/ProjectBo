@@ -26,6 +26,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .record .body {
   display: flex;
   flex-direction: column;
