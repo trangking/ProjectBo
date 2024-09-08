@@ -13,6 +13,8 @@ import Evaluation2 from "./Evaluation_Form/Evaluation2";
 import StudentPage from "./StudentPage/StudentPage";
 import Record from "./Record/Record";
 import AdminPage from "./Admin/adminpage";
+import MenuAdmin from "./Admin/MenuAdmin";
+import HistoryStudent from "./Admin/HistoryStudent";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,6 +30,8 @@ root.render(
       <Route path="/StudentPage" element={<StudentPage />} />
       <Route path="/Record" element={<Record />} />
       <Route path="/AdminPage" element={<AdminPage />} />
+      <Route path="/MenuAdmin" element={<MenuAdmin />} />
+      <Route path="/Student" element={<HistoryStudent />} />
     </Routes>
   </BrowserRouter>
 );

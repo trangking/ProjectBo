@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import Header from "../Hearder/Hearder";
-import "../styles/login.css";
-import "../styles/Menu.css";
 import { fetchDataByStudentId, fetchDataByPoint } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 
 const StudentPage = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true); // เพิ่ม state เพื่อตรวจสอบว่ากำลังโหลดหรือไม่
+  const [isLoading, setIsLoading] = useState(true);
   const [studentData, setStudentData] = useState(null);
   const [studentId, setStudentId] = useState("");
-  const [recordStudent, setrecordStudent] = useState(null);
+  const [recordStudent, setRecordStudent] = useState(null);
 
   useEffect(() => {
     const storedStudentId = localStorage.getItem("studentId");
@@ -18,49 +16,57 @@ const StudentPage = () => {
       setStudentId(storedStudentId);
       fetchDataByStudentId(storedStudentId).then((data) => {
         setStudentData(data);
-        setIsLoading(false); // เมื่อโหลดข้อมูลเสร็จสิ้น กำหนดให้ isLoading เป็น false
+        setIsLoading(false);
       });
       fetchDataByPoint(storedStudentId).then((data) => {
-        setrecordStudent(data);
-        setIsLoading(false); // เมื่อโหลดข้อมูลเสร็จสิ้น กำหนดให้ isLoading เป็น false
+        setRecordStudent(data);
+        setIsLoading(false);
       });
     }
-    console.log(recordStudent);
   }, []);
 
   return (
     <>
-      <Header />
-      <div className="App">
-        <div className="App-background">
-          <div className="Menu">
-            <div className="body">
-              <h2>ข้อมูลนักศึกษา</h2>
-              {isLoading ? (
-                // หาก isLoading เป็น true แสดงข้อความ loading
-                <p>Loading...</p>
-              ) : (
-                // หาก isLoading เป็น false แสดงข้อมูลนักศึกษา
-                studentData &&
-                studentData.map((student) => (
-                  <div key={student.id}>
-                    <p>รหัสประจำตัวนักศึกษา: {student.studentId}</p>
-                    <p>
-                      ชื่อ-นามสกุล: {student.firstName} {student.lastName}
-                    </p>
-                    <p>คณะ: {student.faculty}</p>
-                    <p>สาขา: {student.major}</p>
-                  </div>
-                ))
-              )}
-              <button
-                onClick={() => {
-                  navigate("/menu");
-                }}
-              >
-                ย้อนกลับ
-              </button>
+      <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
+          <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+            ข้อมูลนักศึกษา
+          </h2>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center">
+              <p className="text-gray-500">กำลังโหลดข้อมูล...</p>
             </div>
+          ) : studentData ? (
+            studentData.map((student) => (
+              <div key={student.id} className="space-y-4 text-gray-700">
+                <p className="text-lg">
+                  <span className="font-medium">รหัสประจำตัวนักศึกษา:</span>{" "}
+                  {student.studentId}
+                </p>
+                <p className="text-lg">
+                  <span className="font-medium">ชื่อ-นามสกุล:</span>{" "}
+                  {student.firstName} {student.lastName}
+                </p>
+                <p className="text-lg">
+                  <span className="font-medium">คณะ:</span> {student.faculty}
+                </p>
+                <p className="text-lg">
+                  <span className="font-medium">สาขา:</span> {student.major}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-red-500">ไม่พบข้อมูลนักศึกษา</p>
+          )}
+
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => navigate("/menu")}
+              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
+            >
+              ย้อนกลับ
+            </button>
           </div>
         </div>
       </div>

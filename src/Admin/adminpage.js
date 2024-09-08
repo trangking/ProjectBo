@@ -20,7 +20,7 @@ const AdminPage = () => {
 
   const handleGoHome = () => {
     localStorage.clear();
-    navigate("/");
+    navigate("/MenuAdmin");
   };
 
   useEffect(() => {
@@ -32,7 +32,6 @@ const AdminPage = () => {
 
     fetchData();
   }, []);
-  console.log(data);
 
   return (
     <>
@@ -89,9 +88,16 @@ const AdminPage = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Button type="primary" danger onClick={handleGoHome}>
-                ออกจากระบบ
-              </Button>
+              <div className="w-full h-[50px] flex ">
+                <Button
+                  type="primary"
+                  danger
+                  onClick={handleGoHome}
+                  className=" mt-5"
+                >
+                  {"<"}
+                </Button>
+              </div>
             </div>
           </div>
         </div>

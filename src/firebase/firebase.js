@@ -54,6 +54,18 @@ const fetchDataByStudentId = async (studentId) => {
   return filteredData;
 };
 
+const fetchStudent = async () => {
+  const colRef = collection(db, "data");
+  const snapshot = await getDocs(colRef);
+
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return data;
+};
+
 const fetchDataByPoint = async (studentId) => {
   const colRef = collection(db, "SavePoint");
   const snapshot = await getDocs(colRef);
@@ -83,6 +95,7 @@ const fetchData_record = async () => {
 };
 
 export {
+  fetchStudent,
   fetchDataByPoint,
   fetchData,
   fetchDataByStudentId,

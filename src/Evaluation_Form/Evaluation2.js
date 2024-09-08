@@ -185,20 +185,21 @@ const Evaluation2 = () => {
   return (
     <>
       <Header />
-      <div className="App">
-        <div className="App-background">
-          <div className="Evaluation">
-            <div className="HeaderEvaluation">
-              <p>แบบประเมินภาวะซึมเศร้า 9 คำถาม (9Q)</p>
-            </div>
-            <div className="body">
-              <div className="ControlTable">
-                <Table columns={columns} dataSource={data}></Table>
-              </div>
-            </div>
-            <div className="ControlButton">
-              <Button onClick={SentMessage}>ส่งคำตอบ</Button>
-            </div>
+      <div className="min-h-screen bg-gradient-to-r from-green-700 via-yellow-500 to-green-500 flex flex-col items-center justify-center py-8">
+        <div className="bg-white shadow-md rounded-lg w-full max-w-4xl p-6">
+          <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+            แบบประเมินภาวะซึมเศร้า 9 คำถาม (9Q)
+          </h1>
+          <div className="overflow-x-auto">
+            <Table columns={columns} dataSource={data} pagination={false} />
+          </div>
+          <div className="text-center mt-6">
+            <button
+              onClick={SentMessage}
+              className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+            >
+              ส่งคำตอบ
+            </button>
           </div>
         </div>
       </div>
