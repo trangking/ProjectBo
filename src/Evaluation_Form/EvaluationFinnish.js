@@ -46,8 +46,7 @@ const EvaluationFinish = () => {
 
               await addDoc(colRef, {
                 studentId: studentId,
-                firstName: foundStudent.firstName || "",
-                lastName: foundStudent.lastName || "",
+                Name: foundStudent.Name || "",
                 major: foundStudent.major || "",
                 faculty: foundStudent.faculty || "",
                 message: message || "ไม่มีข้อมูล",

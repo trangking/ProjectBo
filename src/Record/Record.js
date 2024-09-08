@@ -81,7 +81,7 @@ const Record = () => {
                 </p>
                 <p>
                   <span className="font-medium">ชื่อ-นามสกุล:</span>{" "}
-                  {recordStudent[0].firstName} {recordStudent[0].lastName}
+                  {recordStudent[0].Name}
                 </p>
                 <p>
                   <span className="font-medium">คณะ:</span>{" "}
