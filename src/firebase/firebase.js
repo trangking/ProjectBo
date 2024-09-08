@@ -94,12 +94,73 @@ const fetchData_record = async () => {
   return data;
 };
 
+const fetchDataByPointRange = async () => {
+  const colRef = collection(db, "SavePoint");
+  const snapshot = await getDocs(colRef);
+
+  // Define the levels and their point ranges
+  const levels = [
+    { level: 1, text: "ไม่มีอาการ", color: "#6EC1E4", pointRange: [0, 4] },
+    {
+      level: 2,
+      text: "อาการซึมเศร้าเล็กน้อย",
+      color: "#8BC34A",
+      pointRange: [5, 8],
+    },
+    {
+      level: 3,
+      text: "อาการซึมเศร้าปานกลาง",
+      color: "#FFEB3B",
+      pointRange: [9, 14],
+    },
+    {
+      level: 4,
+      text: "อาการซึมเศร้าค่อนข้างมาก",
+      color: "#FF9800",
+      pointRange: [15, 19],
+    },
+    {
+      level: 5,
+      text: "อาการซึมเศร้ารุนแรง",
+      color: "#F44336",
+      pointRange: [20, 27],
+    },
+  ];
+
+  // Get all data from the collection
+  const allData = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  // Create an object to store students separated by level
+  const studentsByLevel = {};
+
+  levels.forEach((level) => {
+    // Filter students within the current level's point range
+    const studentsInLevel = allData.filter(
+      (item) =>
+        item.point >= level.pointRange[0] && item.point <= level.pointRange[1]
+    );
+
+    // Store the filtered students under the level key
+    studentsByLevel[level.level] = {
+      levelInfo: level,
+      students: studentsInLevel,
+      count: studentsInLevel.length, // Store the count of students in this level
+    };
+  });
+
+  return studentsByLevel; // Return students categorized by level
+};
+
 export {
   fetchStudent,
   fetchDataByPoint,
   fetchData,
   fetchDataByStudentId,
   fetchData_record,
+  fetchDataByPointRange,
   addDoc,
   doc,
   db,

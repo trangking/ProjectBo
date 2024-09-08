@@ -15,6 +15,7 @@ import Record from "./Record/Record";
 import AdminPage from "./Admin/adminpage";
 import MenuAdmin from "./Admin/MenuAdmin";
 import HistoryStudent from "./Admin/HistoryStudent";
+import Symptom from "./Admin/Symptom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -32,6 +33,7 @@ root.render(
       <Route path="/AdminPage" element={<AdminPage />} />
       <Route path="/MenuAdmin" element={<MenuAdmin />} />
       <Route path="/Student" element={<HistoryStudent />} />
+      <Route path="/Symptom" element={<Symptom />} />
     </Routes>
   </BrowserRouter>
 );

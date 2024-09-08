@@ -24,11 +24,11 @@ const Menu = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+      <div className="min-h-screen bg-green-100 flex justify-center items-center">
         <div className="bg-white p-10 rounded-xl shadow-md w-full max-w-lg">
-          <div className="text-center mb-8">
+          <div className="text-center mb-4">
             <h3 className="text-3xl font-semibold text-gray-800">MENU</h3>
-            <div className="border-t-2 border-green-500 w-16 mx-auto mt-4"></div>
+            <div className="border-t-2 border-green-500 w-full mx-auto mt-4"></div>
           </div>
 
           <div className="space-y-4">
@@ -53,6 +53,7 @@ const Menu = () => {
               ข้อมูลนักศึกษา
             </button>
 
+            <div className="border-t-2 border-green-500 w-full mx-auto mt-4"></div>
             <button
               onClick={HadleGoHome}
               className="w-full py-3 bg-red-500 text-white rounded-lg font-medium text-lg hover:bg-red-600 transition duration-300"

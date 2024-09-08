@@ -1,54 +1,71 @@
 import React from "react";
 import Header from "../Hearder/Hearder";
-import { Button } from "antd";
+import { Button, Image } from "antd";
 import { Link } from "react-router-dom";
 
 export default function MenuAdmin() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-blue-50 flex justify-center items-center">
-        <div className="bg-white rounded-2xl shadow-xl w-[600px] grid grid-cols-2">
-          <div className="flex justify-center items-center bg-gradient-to-r from-green-400 to-teal-500 rounded-l-2xl text-white">
-            <h1 className="text-2xl font-bold tracking-wide">AdminPage</h1>
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 flex justify-center items-center p-6">
+        <div className="bg-white rounded-3xl shadow-2xl w-full max-w-[600px] grid grid-cols-2 overflow-hidden">
+          <div className="flex justify-center items-center bg-gradient-to-r from-teal-400 to-teal-600">
+            <Image
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Emblem_of_Maejo_University.svg/1200px-Emblem_of_Maejo_University.svg.png"
+              width={180}
+              height={180}
+              preview={false}
+            />
           </div>
 
-          <div className="flex flex-col justify-center items-center space-y-6 p-8 bg-white rounded-r-2xl">
+          {/* Right Side */}
+          <div className="flex flex-col justify-center items-center space-y-8 p-10 bg-white">
+            <h2 className="text-2xl font-bold text-gray-700 mb-4">
+              เมนูผู้ดูแลระบบ
+            </h2>
+
             <Link to="/Student" className="w-full">
               <Button
-                className="w-full"
+                className="w-full "
                 type="primary"
                 style={{
                   backgroundColor: "#4CAF50",
                   borderColor: "#4CAF50",
                   fontWeight: "bold",
                   fontSize: "16px",
+                  borderRadius: "12px",
                 }}
               >
                 ประวัติการประเมินนักศึกษา
               </Button>
             </Link>
-            <Button
-              className="w-full"
-              type="primary"
-              style={{
-                backgroundColor: "#81C784",
-                borderColor: "#81C784",
-                fontWeight: "bold",
-                fontSize: "16px",
-              }}
-            >
-              การประเมินวันนี้
-            </Button>
-            <Link to="/" className="w-full">
+
+            <Link to="/Symptom" className="w-full">
               <Button
                 className="w-full"
+                type="primary"
+                style={{
+                  backgroundColor: "#81C784",
+                  borderColor: "#81C784",
+                  fontWeight: "bold",
+                  fontSize: "16x",
+                  borderRadius: "12px",
+                }}
+              >
+                ค้นการตามอาการ
+              </Button>
+            </Link>
+
+            <Link to="/" className="w-full">
+              <Button
+                className="w-full "
                 type="primary"
                 style={{
                   backgroundColor: "#E57373",
                   borderColor: "#E57373",
                   fontWeight: "bold",
                   fontSize: "16px",
+                  borderRadius: "12px",
                   color: "white",
                 }}
               >

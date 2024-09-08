@@ -63,7 +63,7 @@ export default function HistoryStudent({ navigate }) {
   const currentItems = dataStudent.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="p-8">
+    <div className="p-8 ">
       {/* Back Button with ArrowLeft Icon */}
       <Link to="/MenuAdmin" className="w-full">
         <Button type="link" icon={<ArrowLeftOutlined />} className="mb-4">
@@ -145,7 +145,7 @@ export default function HistoryStudent({ navigate }) {
                     <th className="text-left py-2 px-4">วันที่</th>
                     <th className="text-left py-2 px-4">คณะ</th>
                     <th className="text-left py-2 px-4">ชื่อ</th>
-                    <th className="text-left py-2 px-4">นามสกุล</th>
+
                     <th className="text-left py-2 px-4">สาขา</th>
                     <th className="text-left py-2 px-4">ข้อความ</th>
                     <th className="text-left py-2 px-4">คะแนน</th>
@@ -156,8 +156,8 @@ export default function HistoryStudent({ navigate }) {
                     <tr key={item.id} className="border-b border-gray-200">
                       <td className="py-2 px-4">{item.date}</td>
                       <td className="py-2 px-4">{item.faculty}</td>
-                      <td className="py-2 px-4">{item.firstName}</td>
-                      <td className="py-2 px-4">{item.lastName}</td>
+                      <td className="py-2 px-4">{item.Name}</td>
+
                       <td className="py-2 px-4">{item.major}</td>
                       <td className="py-2 px-4">{item.message}</td>
                       <td className="py-2 px-4">{item.point}</td>
