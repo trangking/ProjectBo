@@ -55,6 +55,21 @@ export default function MenuAdmin() {
                 ค้นการตามอาการ
               </Button>
             </Link>
+            <Link to="/Graph" className="w-full">
+              <Button
+                className="w-full"
+                type="primary"
+                style={{
+                  backgroundColor: "#89C754",
+                  borderColor: "#81C784",
+                  fontWeight: "bold",
+                  fontSize: "16x",
+                  borderRadius: "12px",
+                }}
+              >
+                สรุปรายเดือน
+              </Button>
+            </Link>
 
             <Link to="/" className="w-full">
               <Button

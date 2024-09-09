@@ -151,7 +151,7 @@ const fetchDataByPointRange = async () => {
     };
   });
 
-  return studentsByLevel; // Return students categorized by level
+  return studentsByLevel;
 };
 
 export {
