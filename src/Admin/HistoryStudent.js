@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchStudent, fetchDataByPoint } from "../firebase/firebase";
-import { Select, Button } from "antd"; // Imported Select and Button from Ant Design
+import { Select, Button, Input } from "antd"; // Imported Select, Button, and Input from Ant Design
 import { ArrowLeftOutlined } from "@ant-design/icons"; // Imported ArrowLeftOutlined icon
 import { Link } from "react-router-dom";
 
@@ -16,8 +16,10 @@ export default function HistoryStudent({ navigate }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); // กำหนดจำนวนรายการต่อหน้า
 
-  // State สำหรับการเลือกชั้นปี
+  // State สำหรับการเลือกคณะ, ชั้นปี และสาขา
+  const [selectedFaculty, setSelectedFaculty] = useState(null);
   const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedMajor, setSelectedMajor] = useState(null);
 
   useEffect(() => {
     fetchStudent().then((data) => {
@@ -30,18 +32,26 @@ export default function HistoryStudent({ navigate }) {
   };
 
   const handleYearChange = (value) => {
-    setSelectedYear(value); // Update the selected year value from Ant Design Select
+    setSelectedYear(value);
+  };
+
+  const handleFacultyChange = (value) => {
+    setSelectedFaculty(value);
+  };
+
+  const handleMajorChange = (value) => {
+    setSelectedMajor(value);
   };
 
   const ShowData = (id) => {
     fetchDataByPoint(id).then((item) => {
-      setDataStudent(item); // Set the fetched student data
-      setIsModalVisible(true); // Show the modal when data is available
+      setDataStudent(item);
+      setIsModalVisible(true);
     });
   };
 
   const handleModalClose = () => {
-    setIsModalVisible(false); // Close the modal when clicking the "Close" button
+    setIsModalVisible(false);
   };
 
   const filteredData = student.filter(
@@ -49,22 +59,21 @@ export default function HistoryStudent({ navigate }) {
       ((student.firstName && student.firstName.includes(searchText)) ||
         (student.lastName && student.lastName.includes(searchText)) ||
         (student.studentId && student.studentId.includes(searchText))) &&
-      (!selectedYear || student.student_year === selectedYear) // Add year filter if selected
+      (!selectedYear || student.student_year === selectedYear) &&
+      (!selectedFaculty || student.faculty === selectedFaculty) &&
+      (!selectedMajor || student.major === selectedMajor)
   );
 
-  // ฟังก์ชันสำหรับเปลี่ยนหน้า
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  // กำหนดข้อมูลที่จะถูกแสดงในหน้า
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = dataStudent.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="p-8 ">
-      {/* Back Button with ArrowLeft Icon */}
       <Link to="/MenuAdmin" className="w-full">
         <Button type="link" icon={<ArrowLeftOutlined />} className="mb-4">
           ย้อนกลับ
@@ -75,23 +84,46 @@ export default function HistoryStudent({ navigate }) {
 
       {/* Search and filter section */}
       <div className="flex space-x-4 mb-4">
-        <input
+        <Input
           placeholder="ค้นหาตามชื่อหรือรหัสนักศึกษา"
           value={searchText}
           onChange={handleSearch}
           className="p-2 border border-gray-300 rounded-lg w-72 h-[32px]"
+          style={{ width: '20%' }}
         />
 
-        {/* Ant Design Select for Class Year */}
         <Select
-          placeholder="เลือกชั้นปี"
+          placeholder="เลือกคณะ"
+          style={{ width: 150 }}
+          onChange={handleFacultyChange}
+          allowClear
+        >
+          <Option value="วิทยาศาสตร์">วิทยาศาสตร์</Option>
+          <Option value="บริหารธุรกิจ">บริหารธุรกิจ</Option>
+          {/* Add more faculty options as needed */}
+        </Select>
+
+        <Select
+          placeholder="เลือกปีการศึกษา"
           style={{ width: 150 }}
           onChange={handleYearChange}
+          allowClear
         >
-          <Option value={1}>ชั้นปี 1</Option>
-          <Option value={2}>ชั้นปี 2</Option>
-          <Option value={3}>ชั้นปี 3</Option>
-          <Option value={4}>ชั้นปี 4</Option>
+          <Option value={"2561"}>ปีการศึกษา 2561</Option>
+          <Option value={"2562"}>ปีการศึกษา 2562</Option>
+          <Option value={"2563"}>ปีการศึกษา 2563</Option>
+          <Option value={"2564"}>ปีการศึกษา 2564</Option>
+        </Select>
+
+        <Select
+          placeholder="เลือกสาขา"
+          style={{ width: 150 }}
+          onChange={handleMajorChange}
+          allowClear
+        >
+          <Option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</Option>
+          <Option value="วิทยาศาสตร์สิ่งแวดล้อม">วิทยาศาสตร์สิ่งแวดล้อม</Option>
+          {/* Add more major options as needed */}
         </Select>
       </div>
 
@@ -103,7 +135,7 @@ export default function HistoryStudent({ navigate }) {
               <th className="text-left py-2 px-4">ชื่อ-นามสกุล</th>
               <th className="text-left py-2 px-4">รหัสนักศึกษา</th>
               <th className="text-left py-2 px-4">คณะ</th>
-              <th className="text-left py-2 px-4">ชั้นปี</th>
+              <th className="text-left py-2 px-4">ปีการศึกษา</th>
               <th className="text-left py-2 px-4">สาขา</th>
               <th className="text-left py-2 px-4">ดูข้อมูล</th>
             </tr>
@@ -145,7 +177,6 @@ export default function HistoryStudent({ navigate }) {
                     <th className="text-left py-2 px-4">วันที่</th>
                     <th className="text-left py-2 px-4">คณะ</th>
                     <th className="text-left py-2 px-4">ชื่อ</th>
-
                     <th className="text-left py-2 px-4">สาขา</th>
                     <th className="text-left py-2 px-4">ข้อความ</th>
                     <th className="text-left py-2 px-4">คะแนน</th>
@@ -157,7 +188,6 @@ export default function HistoryStudent({ navigate }) {
                       <td className="py-2 px-4">{item.date}</td>
                       <td className="py-2 px-4">{item.faculty}</td>
                       <td className="py-2 px-4">{item.Name}</td>
-
                       <td className="py-2 px-4">{item.major}</td>
                       <td className="py-2 px-4">{item.message}</td>
                       <td className="py-2 px-4">{item.point}</td>
@@ -167,19 +197,15 @@ export default function HistoryStudent({ navigate }) {
               </table>
             </div>
 
-            {/* Pagination */}
             <div className="mt-4 flex justify-center space-x-2">
-              {[
-                ...Array(Math.ceil(dataStudent.length / itemsPerPage)).keys(),
-              ].map((number) => (
+              {[...Array(Math.ceil(dataStudent.length / itemsPerPage)).keys()].map((number) => (
                 <button
                   key={number}
                   onClick={() => handlePageChange(number + 1)}
-                  className={`px-4 py-2 rounded-lg ${
-                    currentPage === number + 1
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
+                  className={`px-4 py-2 rounded-lg ${currentPage === number + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-700"
+                    }`}
                 >
                   {number + 1}
                 </button>

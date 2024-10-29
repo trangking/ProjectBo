@@ -6,7 +6,7 @@ import {
   collection,
   getDocs,
   addDoc,
-  doc,
+  doc, query, orderBy
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -83,7 +83,10 @@ const fetchDataByPoint = async (studentId) => {
 const fetchData_record = async () => {
   const db = getFirestore();
   const colRef = collection(db, "SavePoint");
-  const snapshot = await getDocs(colRef);
+
+  // Query the collection, ordering by 'createdAt' in descending order
+  const q = query(colRef, orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
 
   // Map through the documents and structure the data
   const data = snapshot.docs.map((doc) => ({
@@ -100,30 +103,24 @@ const fetchDataByPointRange = async () => {
 
   // Define the levels and their point ranges
   const levels = [
-    { level: 1, text: "ไม่มีอาการ", color: "#6EC1E4", pointRange: [0, 4] },
+    { level: 1, text: "ไม่มีอาการซึมเศร้า", color: "#8BC34A", pointRange: [0, 6] },
     {
       level: 2,
       text: "อาการซึมเศร้าเล็กน้อย",
-      color: "#8BC34A",
-      pointRange: [5, 8],
+      color: "#FFEB3B",
+      pointRange: [7, 12],
     },
     {
       level: 3,
       text: "อาการซึมเศร้าปานกลาง",
-      color: "#FFEB3B",
-      pointRange: [9, 14],
+      color: "#FF9800",
+      pointRange: [13, 18],
     },
     {
       level: 4,
       text: "อาการซึมเศร้าค่อนข้างมาก",
-      color: "#FF9800",
-      pointRange: [15, 19],
-    },
-    {
-      level: 5,
-      text: "อาการซึมเศร้ารุนแรง",
-      color: "#F44336",
-      pointRange: [20, 27],
+      color: "#FF0000",
+      pointRange: [19, 28],
     },
   ];
 

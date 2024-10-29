@@ -160,7 +160,7 @@ const Evaluation2 = () => {
     switch (true) {
       case point < 7:
         messageEvaluation =
-          "ไม่มี อาการของโรคซึมเศร้า หรือมีอาการของโรคซึมเศร้าระดับน้อยมาก";
+          "ไม่มีอาการซึมเศร้าหรือมีก็เพียงเล็กน้อย";
         break;
       case point >= 7 && point <= 12:
         messageEvaluation = " มีอาการของโรคซึมเศร้า ระดับน้อย";

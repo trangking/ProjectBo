@@ -14,6 +14,8 @@ export default function Symptom() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [countByLevel, setCountByLevel] = useState({});
+  const [selectedMajor, setSelectedMajor] = useState(null);
+  const [selectedFaculty, setSelectedFaculty] = useState(null);
 
   useEffect(() => {
     fetchDataByPointRange().then((studentsByLevel) => {
@@ -38,6 +40,16 @@ export default function Symptom() {
       );
     }
 
+    if (selectedFaculty) {
+      students = students.filter(
+        (student) => student.faculty === selectedFaculty
+      );
+    }
+
+    if (selectedMajor) {
+      students = students.filter((student) => student.major === selectedMajor);
+    }
+
     if (searchText) {
       students = students.filter(
         (student) =>
@@ -47,7 +59,14 @@ export default function Symptom() {
     }
 
     return students;
-  }, [selectedLevel, selectedYear, searchText, studentByLevel]);
+  }, [
+    selectedLevel,
+    selectedYear,
+    selectedFaculty,
+    selectedMajor,
+    searchText,
+    studentByLevel,
+  ]);
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -61,21 +80,33 @@ export default function Symptom() {
     setSelectedLevel(level);
     setSearchText("");
     setSelectedYear(null);
-    setCurrentPage(1); // รีเซ็ต pagination เมื่อเปลี่ยนระดับ
+    setSelectedFaculty(null);
+    setSelectedMajor(null);
+    setCurrentPage(1);
   };
 
   const handleYearChange = (year) => {
     setSelectedYear(year);
-    setCurrentPage(1); // รีเซ็ต pagination เมื่อเปลี่ยนชั้นปี
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
-    setCurrentPage(1); // รีเซ็ต pagination เมื่อค้นหา
+    setCurrentPage(1);
   };
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleMajorChange = (value) => {
+    setSelectedMajor(value);
+    setCurrentPage(1);
+  };
+
+  const handleFacultyChange = (value) => {
+    setSelectedFaculty(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -100,7 +131,7 @@ export default function Symptom() {
             const level = studentByLevel[levelKey].levelInfo;
             return (
               <div
-                key={level.level} // ใช้ `level.level` แทนค่าที่ไม่ซ้ำกันแน่นอน
+                key={level.level}
                 className="p-4 bg-white shadow-md rounded-lg flex items-center justify-between"
                 style={{ borderLeft: `10px solid ${level.color}` }}
               >
@@ -156,23 +187,46 @@ export default function Symptom() {
       {selectedLevel && (
         <>
           <div className="flex space-x-4 mb-4">
-            <input
+            <Input
               placeholder="ค้นหาตามชื่อหรือรหัสนักศึกษา"
               value={searchText}
+              style={{ width: "20%" }}
               onChange={handleSearchChange}
               className="p-2 border border-gray-300 rounded-lg w-72 h-[32px]"
             />
 
             <Select
-              placeholder="เลือกชั้นปี"
+              placeholder="เลือกคณะ"
               style={{ width: 150 }}
-              value={selectedYear}
-              onChange={handleYearChange}
+              onChange={handleFacultyChange}
+              allowClear
             >
-              <Option value={1}>ชั้นปี 1</Option>
-              <Option value={2}>ชั้นปี 2</Option>
-              <Option value={3}>ชั้นปี 3</Option>
-              <Option value={4}>ชั้นปี 4</Option>
+              <Option value="วิทยาศาสตร์">วิทยาศาสตร์</Option>
+              <Option value="บริหารธุรกิจ">บริหารธุรกิจ</Option>
+              {/* Add more faculty options as needed */}
+            </Select>
+
+            <Select
+              placeholder="เลือกปีการศึกษา"
+              style={{ width: 150 }}
+              onChange={handleYearChange}
+              allowClear
+            >
+              <Option value="2561">ปีการศึกษา 2561</Option>
+              <Option value="2562">ปีการศึกษา 2562</Option>
+              <Option value="2563">ปีการศึกษา 2563</Option>
+              <Option value="2564">ปีการศึกษา 2564</Option>
+            </Select>
+
+            <Select
+              placeholder="เลือกสาขา"
+              style={{ width: 250 }}
+              onChange={handleMajorChange}
+              allowClear
+            >
+              <Option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</Option>
+              <Option value="วิทยาศาสตร์สิ่งแวดล้อม">วิทยาศาสตร์สิ่งแวดล้อม</Option>
+              {/* Add more major options as needed */}
             </Select>
           </div>
 
@@ -191,7 +245,7 @@ export default function Symptom() {
               <tbody>
                 {currentItems.map((record, index) => (
                   <tr
-                    key={record.studentId + index} // ใช้ `index` ร่วมกับ `studentId` เพื่อป้องกันปัญหา key ซ้ำ
+                    key={record.studentId + index}
                     className="border-b border-gray-200 hover:bg-gray-100"
                   >
                     <td className="py-2 px-4">

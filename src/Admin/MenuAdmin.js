@@ -11,9 +11,9 @@ export default function MenuAdmin() {
         <div className="bg-white rounded-3xl shadow-2xl w-full max-w-[600px] grid grid-cols-2 overflow-hidden">
           <div className="flex justify-center items-center bg-gradient-to-r from-teal-400 to-teal-600">
             <Image
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Emblem_of_Maejo_University.svg/1200px-Emblem_of_Maejo_University.svg.png"
+              src="/Level/logomju.png"
               width={180}
-              height={180}
+              height={80}
               preview={false}
             />
           </div>

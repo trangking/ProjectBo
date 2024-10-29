@@ -83,20 +83,18 @@ const EvaluationFinish = () => {
 
   // Corrected ImageLevel array
   const ImageLevel = [
-    { level: 1, path: "/Level/LV1.png" }, // 0-4 points
-    { level: 2, path: "/Level/LV2.png" }, // 5-8 points
-    { level: 3, path: "/Level/LV3.png" }, // 9-14 points
-    { level: 4, path: "/Level/LV4.png" }, // 15-19 points
-    { level: 5, path: "/Level/LV5.png" }, // 20-27 points
+    { level: 1, path: "/Level/LV1.jpg" },
+    { level: 2, path: "/Level/LV2.jpg" },
+    { level: 3, path: "/Level/LV3.jpg" },
+    { level: 4, path: "/Level/LV4.jpg" },
   ];
 
   // Logic to select image based on score
   const getImageForLevel = (points) => {
-    if (points >= 0 && points <= 4) return ImageLevel[0].path;
-    if (points >= 5 && points <= 8) return ImageLevel[1].path;
-    if (points >= 9 && points <= 14) return ImageLevel[2].path;
-    if (points >= 15 && points <= 19) return ImageLevel[3].path;
-    if (points >= 20 && points <= 27) return ImageLevel[4].path;
+    if (points >= 0 && points <= 6) return ImageLevel[0].path;
+    if (points >= 7 && points <= 12) return ImageLevel[1].path;
+    if (points >= 13 && points <= 18) return ImageLevel[2].path;
+    if (points >= 19) return ImageLevel[3].path;
     return null;
   };
 
