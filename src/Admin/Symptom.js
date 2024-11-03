@@ -28,9 +28,8 @@ export default function Symptom() {
     });
   }, []);
 
-  // ใช้ useMemo เพื่อเพิ่มประสิทธิภาพในการกรองข้อมูล
   const filteredStudents = useMemo(() => {
-    if (!selectedLevel) return [];
+    if (selectedLevel === null) return [];
 
     let students = studentByLevel[selectedLevel]?.students || [];
 
@@ -68,7 +67,6 @@ export default function Symptom() {
     studentByLevel,
   ]);
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredStudents.slice(
@@ -82,30 +80,6 @@ export default function Symptom() {
     setSelectedYear(null);
     setSelectedFaculty(null);
     setSelectedMajor(null);
-    setCurrentPage(1);
-  };
-
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
-    setCurrentPage(1);
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
-    setCurrentPage(1);
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const handleMajorChange = (value) => {
-    setSelectedMajor(value);
-    setCurrentPage(1);
-  };
-
-  const handleFacultyChange = (value) => {
-    setSelectedFaculty(value);
     setCurrentPage(1);
   };
 
@@ -138,7 +112,10 @@ export default function Symptom() {
                 <div>
                   <h2 className="text-lg font-bold">{level.text}</h2>
                   <p className="text-gray-600">
-                    ช่วงคะแนน: {level.pointRange[0]} - {level.pointRange[1]}
+                    ช่วงคะแนน:
+                    {level.level === 0
+                      ? " 0"
+                      : `${level.pointRange[0]} - ${level.pointRange[1]}`}
                   </p>
                   <p className="text-gray-600">
                     จำนวนทั้งหมด: {countByLevel[level.level] || 0} คน
@@ -159,7 +136,7 @@ export default function Symptom() {
           })}
         </div>
 
-        {selectedLevel && (
+        {selectedLevel !== null && (
           <div className="mt-8 flex flex-col items-center justify-center">
             <div
               className="w-72 p-4 bg-white shadow-lg rounded-lg border-t-4"
@@ -184,21 +161,27 @@ export default function Symptom() {
         )}
       </div>
 
-      {selectedLevel && (
+      {selectedLevel !== null && (
         <>
           <div className="flex space-x-4 mb-4">
             <Input
               placeholder="ค้นหาตามชื่อหรือรหัสนักศึกษา"
               value={searchText}
               style={{ width: "20%" }}
-              onChange={handleSearchChange}
+              onChange={(e) => {
+                setSearchText(e.target.value);
+                setCurrentPage(1);
+              }}
               className="p-2 border border-gray-300 rounded-lg w-72 h-[32px]"
             />
 
             <Select
               placeholder="เลือกคณะ"
               style={{ width: 150 }}
-              onChange={handleFacultyChange}
+              onChange={(value) => {
+                setSelectedFaculty(value);
+                setCurrentPage(1);
+              }}
               allowClear
             >
               <Option value="วิทยาศาสตร์">วิทยาศาสตร์</Option>
@@ -209,7 +192,10 @@ export default function Symptom() {
             <Select
               placeholder="เลือกปีการศึกษา"
               style={{ width: 150 }}
-              onChange={handleYearChange}
+              onChange={(year) => {
+                setSelectedYear(year);
+                setCurrentPage(1);
+              }}
               allowClear
             >
               <Option value="2561">ปีการศึกษา 2561</Option>
@@ -221,7 +207,10 @@ export default function Symptom() {
             <Select
               placeholder="เลือกสาขา"
               style={{ width: 250 }}
-              onChange={handleMajorChange}
+              onChange={(value) => {
+                setSelectedMajor(value);
+                setCurrentPage(1);
+              }}
               allowClear
             >
               <Option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</Option>
@@ -267,7 +256,7 @@ export default function Symptom() {
               current={currentPage}
               pageSize={itemsPerPage}
               total={filteredStudents.length}
-              onChange={handlePageChange}
+              onChange={(pageNumber) => setCurrentPage(pageNumber)}
               showSizeChanger={false}
             />
           </div>

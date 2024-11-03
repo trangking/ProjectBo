@@ -158,7 +158,11 @@ const Evaluation2 = () => {
 
     let messageEvaluation = "";
     switch (true) {
-      case point < 7:
+      case point == 0:
+        messageEvaluation =
+          "ปกติ";
+        break; // เพิ่ม break ที่นี่
+      case point > 1 && point < 7:
         messageEvaluation =
           "ไม่มีอาการซึมเศร้าหรือมีก็เพียงเล็กน้อย";
         break;

@@ -101,27 +101,13 @@ const fetchDataByPointRange = async () => {
   const colRef = collection(db, "SavePoint");
   const snapshot = await getDocs(colRef);
 
-  // Define the levels and their point ranges
+  // Define the levels and their attributes without pointRange for level 0
   const levels = [
-    { level: 1, text: "ไม่มีอาการซึมเศร้า", color: "#8BC34A", pointRange: [0, 6] },
-    {
-      level: 2,
-      text: "อาการซึมเศร้าเล็กน้อย",
-      color: "#FFEB3B",
-      pointRange: [7, 12],
-    },
-    {
-      level: 3,
-      text: "อาการซึมเศร้าปานกลาง",
-      color: "#FF9800",
-      pointRange: [13, 18],
-    },
-    {
-      level: 4,
-      text: "อาการซึมเศร้าค่อนข้างมาก",
-      color: "#FF0000",
-      pointRange: [19, 28],
-    },
+    { level: 0, text: "ปกติ", color: "#00BFFF" },
+    { level: 1, text: "ไม่มีอาการซึมเศร้า", color: "#8BC34A", pointRange: [1, 6] },
+    { level: 2, text: "อาการซึมเศร้าเล็กน้อย", color: "#FFEB3B", pointRange: [7, 12] },
+    { level: 3, text: "อาการซึมเศร้าปานกลาง", color: "#FF9800", pointRange: [13, 18] },
+    { level: 4, text: "อาการซึมเศร้าค่อนข้างมาก", color: "#FF0000", pointRange: [19, 28] },
   ];
 
   // Get all data from the collection
@@ -133,23 +119,32 @@ const fetchDataByPointRange = async () => {
   // Create an object to store students separated by level
   const studentsByLevel = {};
 
+  // Add level 0 for students with message "ปกติ"
+  const studentsNormal = allData.filter((item) => item.message === "ปกติ");
+  studentsByLevel[0] = {
+    levelInfo: levels.find((level) => level.level === 0),
+    students: studentsNormal,
+    count: studentsNormal.length,
+  };
+
+  // Process other levels based on point range
   levels.forEach((level) => {
-    // Filter students within the current level's point range
+    if (level.level === 0) return; // Skip level 0
+
     const studentsInLevel = allData.filter(
       (item) =>
         item.point >= level.pointRange[0] && item.point <= level.pointRange[1]
     );
 
-    // Store the filtered students under the level key
     studentsByLevel[level.level] = {
       levelInfo: level,
       students: studentsInLevel,
-      count: studentsInLevel.length, // Store the count of students in this level
+      count: studentsInLevel.length,
     };
   });
-
   return studentsByLevel;
 };
+
 
 export {
   fetchStudent,

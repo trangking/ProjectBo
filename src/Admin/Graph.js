@@ -41,7 +41,7 @@ export default function Graph() {
             labels: labels,
             datasets: [
               {
-                label: "จำนวนของนักเรียนในแต่ละอาการ",
+                label: "จำนวนของนักศึกษาในแต่ละอาการ",
                 data: dataPoints,
                 backgroundColor: colors,
                 borderRadius: 10,
@@ -63,6 +63,14 @@ export default function Graph() {
             },
             scales: {
               x: {
+                title: {
+                  display: true,
+                  text: 'ระดับอาการซึมเศร้า', // กำหนดชื่อแกน X
+                  color: "#ffffff",
+                  font: {
+                    size: 16,
+                  },
+                },
                 ticks: {
                   color: "#ffffff",
                 },
@@ -72,6 +80,14 @@ export default function Graph() {
               },
               y: {
                 beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'จำนวนนักศึกษา', // กำหนดชื่อแกน Y
+                  color: "#ffffff",
+                  font: {
+                    size: 16,
+                  },
+                },
                 ticks: {
                   color: "#ffffff",
                 },
@@ -106,16 +122,15 @@ export default function Graph() {
         {/* Title and Description */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-extrabold text-cyan-500 mb-2">
-            สรุปยอดอาการซึมเศร้าของนักเรียน
+            สรุปยอดอาการซึมเศร้าของนักศึกษา
           </h1>
           <p className="text-gray-400">
-            แสดงข้อมูลอาการซึมเศร้าของนักเรียนแต่ละระดับตามจำนวนนักเรียนที่ตรวจพบ
+            แสดงข้อมูลอาการซึมเศร้าของนักศึกษาแต่ละระดับตามจำนวนนักศึกษาที่ตรวจพบ
           </p>
         </div>
 
         {/* Chart Container */}
         <div className="relative bg-gray-900 p-6 rounded-2xl shadow-lg border border-cyan-500 transition-transform transform hover:scale-105 hover:shadow-2xl">
-          {/* Pulsing border effect */}
           <div className="absolute inset-0 rounded-2xl border-2 border-cyan-500 opacity-20 animate-pulse"></div>
           <canvas ref={chartRef} id="summaryChart" className="w-full h-72"></canvas>
         </div>

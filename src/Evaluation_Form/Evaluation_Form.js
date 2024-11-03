@@ -14,9 +14,18 @@ const Evaluation_Form = () => {
     Object.values(newCheckedValues).forEach((value) => {
       totalPoint += value === "มี" ? 1 : 0;
     });
+
     setCheckedValues(newCheckedValues);
     setPoint(totalPoint);
     setCheckbox(true);
+
+    // Set 'ปกติ' message in localStorage when point is 0
+    if (totalPoint === 0) {
+      localStorage.setItem("message", "ปกติ");
+    } else {
+      localStorage.removeItem("message");
+    }
+
     localStorage.setItem("point", JSON.stringify(totalPoint));
   };
 
