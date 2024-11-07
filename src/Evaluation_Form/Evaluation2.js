@@ -158,13 +158,8 @@ const Evaluation2 = () => {
 
     let messageEvaluation = "";
     switch (true) {
-      case point == 0:
-        messageEvaluation =
-          "ปกติ";
-        break; // เพิ่ม break ที่นี่
-      case point > 1 && point < 7:
-        messageEvaluation =
-          "ไม่มีอาการซึมเศร้าหรือมีก็เพียงเล็กน้อย";
+      case point >= 0 && point <= 7:
+        messageEvaluation = "ไม่มีอาการซึมเศร้าหรือมีก็เพียงเล็กน้อย";
         break;
       case point >= 7 && point <= 12:
         messageEvaluation = " มีอาการของโรคซึมเศร้า ระดับน้อย";
@@ -183,6 +178,7 @@ const Evaluation2 = () => {
     localStorage.setItem("senttofinnish", JSON.stringify(sentfi));
     localStorage.setItem("message", messageEvaluation);
     localStorage.setItem("point", point);
+    localStorage.setItem("type", "9Q");
     await setsenttofinnish(sentfi);
     navigate("/EvaluationFinish");
   };

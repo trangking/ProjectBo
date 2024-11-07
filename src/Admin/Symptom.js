@@ -214,7 +214,9 @@ export default function Symptom() {
               allowClear
             >
               <Option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</Option>
-              <Option value="วิทยาศาสตร์สิ่งแวดล้อม">วิทยาศาสตร์สิ่งแวดล้อม</Option>
+              <Option value="วิทยาศาสตร์สิ่งแวดล้อม">
+                วิทยาศาสตร์สิ่งแวดล้อม
+              </Option>
               {/* Add more major options as needed */}
             </Select>
           </div>
@@ -226,6 +228,8 @@ export default function Symptom() {
                   <th className="text-left py-2 px-4">ลำดับ</th>
                   <th className="text-left py-2 px-4">ชื่อ-นามสกุล</th>
                   <th className="text-left py-2 px-4">รหัสนักศึกษา</th>
+                  <th className="text-left py-2 px-4">คะแนน</th>
+                  <th className="text-left py-2 px-4">ประเภทข้อสอบ</th>
                   <th className="text-left py-2 px-4">คณะ</th>
                   <th className="text-left py-2 px-4">ชั้นปี</th>
                   <th className="text-left py-2 px-4">สาขา</th>
@@ -242,6 +246,8 @@ export default function Symptom() {
                     </td>
                     <td className="py-2 px-4">{record.Name}</td>
                     <td className="py-2 px-4">{record.studentId}</td>
+                    <td className="py-2 px-4">{record.point}</td>
+                    <td className="py-2 px-4">{record.type}</td>
                     <td className="py-2 px-4">{record.faculty}</td>
                     <td className="py-2 px-4">{record.student_Year}</td>
                     <td className="py-2 px-4">{record.major}</td>

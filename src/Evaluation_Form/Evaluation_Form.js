@@ -22,6 +22,7 @@ const Evaluation_Form = () => {
     // Set 'ปกติ' message in localStorage when point is 0
     if (totalPoint === 0) {
       localStorage.setItem("message", "ปกติ");
+      localStorage.setItem("type", "2Q");
     } else {
       localStorage.removeItem("message");
     }

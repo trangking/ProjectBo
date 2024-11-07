@@ -15,6 +15,7 @@ const EvaluationFinish = () => {
   const message = localStorage.getItem("message") || "ปกติ"; // Default to "ปกติ" if no message
   const point = parseInt(localStorage.getItem("point"), 10);
   const studentId = localStorage.getItem("studentId");
+  const type = localStorage.getItem("type");
 
   const handleGoMenu = () => {
     navigate("/Menu");
@@ -23,6 +24,7 @@ const EvaluationFinish = () => {
     localStorage.removeItem("pointZero");
     localStorage.removeItem("senttofinnish");
     localStorage.removeItem("setpoint");
+    localStorage.removeItem("type");
   };
 
   useEffect(() => {
@@ -55,6 +57,7 @@ const EvaluationFinish = () => {
                 pointZero: pointZero,
                 point: point || 0,
                 date: currentDate,
+                type: type,
               });
 
               setIsDataSent(true);
@@ -90,11 +93,14 @@ const EvaluationFinish = () => {
   ];
 
   const getImageForLevel = (points) => {
-    if (points === 0) return ImageLevel[0].path;
-    if (points >= 0 && points <= 6) return ImageLevel[1].path;
-    if (points >= 7 && points <= 12) return ImageLevel[2].path;
-    if (points >= 13 && points <= 18) return ImageLevel[3].path;
-    if (points >= 19) return ImageLevel[4].path;
+    if (type == "2Q") {
+      if (points === 0) return ImageLevel[0].path;
+    } else {
+      if (points >= 0 && points <= 6) return ImageLevel[1].path;
+      if (points >= 7 && points <= 12) return ImageLevel[2].path;
+      if (points >= 13 && points <= 18) return ImageLevel[3].path;
+      if (points >= 19) return ImageLevel[4].path;
+    }
     return null;
   };
 
@@ -123,5 +129,3 @@ const EvaluationFinish = () => {
 };
 
 export default EvaluationFinish;
-
-

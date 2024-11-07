@@ -100,6 +100,7 @@ const Record = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="center">รอบ</TableCell>
+                  <TableCell align="center">2Q/9Q</TableCell>
                   <TableCell align="center">คะแนนของคุณคือ</TableCell>
                   <TableCell align="center">อาการ</TableCell>
                   <TableCell align="center">วันที่ทำแบบทดสอบ</TableCell>
@@ -118,6 +119,7 @@ const Record = () => {
                       <TableCell align="center">
                         {indexOfFirstRow + index + 1}
                       </TableCell>
+                      <TableCell align="center">{record.type}</TableCell>
                       <TableCell
                         align="center"
                         className={getColorClass(record.point)}

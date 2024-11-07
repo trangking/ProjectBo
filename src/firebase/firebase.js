@@ -6,7 +6,9 @@ import {
   collection,
   getDocs,
   addDoc,
-  doc, query, orderBy
+  doc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -104,10 +106,30 @@ const fetchDataByPointRange = async () => {
   // Define the levels and their attributes without pointRange for level 0
   const levels = [
     { level: 0, text: "ปกติ", color: "#00BFFF" },
-    { level: 1, text: "ไม่มีอาการซึมเศร้า", color: "#8BC34A", pointRange: [1, 6] },
-    { level: 2, text: "อาการซึมเศร้าเล็กน้อย", color: "#FFEB3B", pointRange: [7, 12] },
-    { level: 3, text: "อาการซึมเศร้าปานกลาง", color: "#FF9800", pointRange: [13, 18] },
-    { level: 4, text: "อาการซึมเศร้าค่อนข้างมาก", color: "#FF0000", pointRange: [19, 28] },
+    {
+      level: 1,
+      text: "ไม่มีอาการซึมเศร้า",
+      color: "#8BC34A",
+      pointRange: [0, 6],
+    },
+    {
+      level: 2,
+      text: "อาการซึมเศร้าเล็กน้อย",
+      color: "#FFEB3B",
+      pointRange: [7, 12],
+    },
+    {
+      level: 3,
+      text: "อาการซึมเศร้าปานกลาง",
+      color: "#FF9800",
+      pointRange: [13, 18],
+    },
+    {
+      level: 4,
+      text: "อาการซึมเศร้าค่อนข้างมาก",
+      color: "#FF0000",
+      pointRange: [19, 28],
+    },
   ];
 
   // Get all data from the collection
@@ -119,21 +141,41 @@ const fetchDataByPointRange = async () => {
   // Create an object to store students separated by level
   const studentsByLevel = {};
 
-  // Add level 0 for students with message "ปกติ"
-  const studentsNormal = allData.filter((item) => item.message === "ปกติ");
+  // Add level 0 for students with message "ปกติ" and point equal to 0
+  const studentsNormal = allData.filter(
+    (item) => item.message === "ปกติ" && item.point === 0
+  );
   studentsByLevel[0] = {
     levelInfo: levels.find((level) => level.level === 0),
     students: studentsNormal,
     count: studentsNormal.length,
   };
 
-  // Process other levels based on point range
+  // Add level 1 for students with "ไม่มีอาการซึมเศร้า" and type "9Q" within point range 0-6
+  const studentsLevel1 = allData.filter(
+    (item) =>
+      item.message === "ไม่มีอาการซึมเศร้าหรือมีก็เพียงเล็กน้อย" &&
+      item.type === "9Q" &&
+      item.point >= 0 &&
+      item.point <= 6
+  );
+
+  studentsByLevel[1] = {
+    levelInfo: levels.find((level) => level.level === 1),
+    students: studentsLevel1,
+    count: studentsLevel1.length,
+  };
+
+  // Process other levels based on point range, ensuring no overlap with level 0 and level 1
   levels.forEach((level) => {
-    if (level.level === 0) return; // Skip level 0
+    if (level.level === 0 || level.level === 1) return; // Skip level 0 and level 1, as they're already handled
 
     const studentsInLevel = allData.filter(
       (item) =>
-        item.point >= level.pointRange[0] && item.point <= level.pointRange[1]
+        item.point >= level.pointRange[0] &&
+        item.point <= level.pointRange[1] &&
+        item.message !== "ปกติ" &&
+        item.message !== "ไม่มีอาการซึมเศร้าหรือมีก็เพียงเล็กน้อย"
     );
 
     studentsByLevel[level.level] = {
@@ -144,7 +186,6 @@ const fetchDataByPointRange = async () => {
   });
   return studentsByLevel;
 };
-
 
 export {
   fetchStudent,
